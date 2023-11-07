@@ -53,7 +53,9 @@ function handleClick(event){
   if(state.numClicksSoFar === state.numClicksAllowed){
     removeListener();
     renderResultsButton();
-    button.addEventListener('click',renderResults());
+    // button.addEventListener('click',renderResults);
+    button.addEventListener('click',() =>renderResults());
+    // button.addEventListener('click',renderResults());
   } else {
     renderImgs();
   }
@@ -107,17 +109,15 @@ function renderResults(){
   for (let i = 0; i < state.allImg.length; i++) {
     let finalVotes = state.allImg[i].votes;
     let finalViews = state.allImg[i].views;
-    console.log(finalViews);
-    console.log(finalVotes);
+    let name =state.allImg[i].name;
     let list = document.createElement('li');
-    list.textContent = `Total Votes: ${finalVotes} Total Views: ${finalViews}`;
+    list.textContent = `${name} Total Votes: ${finalVotes} Total Views: ${finalViews}`;
     resultsContainer.append(list);
   }
 }
 
 function setupListener() {
   imagesContainer.addEventListener('click',handleClick);
-
 }
 
 // function buttonListener() {
