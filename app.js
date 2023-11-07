@@ -107,8 +107,6 @@ function renderResults(){
   for (let i = 0; i < state.allImg.length; i++) {
     let finalVotes = state.allImg[i].votes;
     let finalViews = state.allImg[i].views;
-    console.log(finalViews);
-    console.log(finalVotes);
     let list = document.createElement('li');
     list.textContent = `Total Votes: ${finalVotes} Total Views: ${finalViews}`;
     resultsContainer.append(list);
@@ -117,7 +115,6 @@ function renderResults(){
 
 function setupListener() {
   imagesContainer.addEventListener('click',handleClick);
-
 }
 
 // function buttonListener() {
