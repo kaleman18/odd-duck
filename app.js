@@ -4,11 +4,12 @@ let button = document.getElementById('button');
 const firstImg = document.querySelector('#images1');
 const secondImg = document.querySelector('#images2');
 const thirdImg = document.querySelector('#images3');
+const barChart = document.querySelector('#chart');
 
 
 let state = {
   numClicksSoFar: 0,
-  numClicksAllowed: 25,
+  numClicksAllowed: 5,
   allImg: [],
 };
 
@@ -53,9 +54,9 @@ function handleClick(event){
   if(state.numClicksSoFar === state.numClicksAllowed){
     removeListener();
     renderResultsButton();
-    // button.addEventListener('click',renderResults);
+    // button.addEventListener('click',renderResults); this is also correct
     button.addEventListener('click',() =>renderResults());
-    // button.addEventListener('click',renderResults());
+    // button.addEventListener('click',renderResults()); THIS IS WRONG, CALLS THE FUNCTION RIGHT AWAY
   } else {
     renderImgs();
   }
@@ -92,10 +93,6 @@ function renderImgs() {
 
 }
 
-// function removeButton() {
-//   button.style.visibility = 'hidden';
-// }
-
 function renderResultsButton(){
   button.style.display = 'block';
 
@@ -114,6 +111,47 @@ function renderResults(){
     list.textContent = `${name} Total Votes: ${finalVotes} Total Views: ${finalViews}`;
     resultsContainer.append(list);
   }
+
+  let imgName = [];
+  let imgVotes = [];
+  let imgViews = [];
+
+  for (let i = 0; i < state.allImg.length; i++) {
+    imgName.push(state.allImg[i].name);
+    imgVotes.push(state.allImg[i].votes);
+    imgViews.push(state.allImg[i].views);
+  }
+
+  const data = {
+    labels: imgName,
+    datasets: [
+      {
+        label: 'Votes',
+        data: imgVotes,
+        borderWidth: 1,
+        backgroundColor: ['red']
+      },
+      {
+        label: 'Views',
+        data: imgViews,
+        borderWidth: 1,
+        backgroundColor: ['blue']
+      }
+    ]
+  };
+
+  const config = {
+    type: 'bar',
+    data: data,
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  };
+  const myChart = new Chart('barchart',config);
 }
 
 function setupListener() {
