@@ -27,7 +27,17 @@ header {
   border-radius: 25px;
   background-color: lightslategray;
   padding-top: 30px;
+  height: 80px;
+  border: 5px solid black;
 
+
+}
+p{
+  line-height: 25px;
+}
+button {
+  margin-left: 510px;
+  margin-bottom: 50px;
 }
 #results {
   grid-area: results;
@@ -35,7 +45,8 @@ header {
   background-color: lightslategray;
   font-size: larger;
   padding: 10px;
-
+  height: 560px;
+  border: 5px solid black;
 }
 footer {
   grid-area: footer;
@@ -44,6 +55,7 @@ footer {
   grid-area: images;
   border-radius: 25px;
   background-color: lightslategray;
+  border: 5px solid black;
   }
 #text {
   grid-area: text;
@@ -63,10 +75,11 @@ footer {
   height: 250px;
   margin-top: 20px;
   margin-bottom: 20px;
-  margin-left: 55px;
-  margin-right: 55px;
+  margin-left: 53px;
+  margin-right: 53px;
   flex-grow: 1;
   border-radius: 25px;
+  border: 5px solid black;
 
 }
 
