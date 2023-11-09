@@ -1,10 +1,10 @@
 const imagesContainer = document.getElementById('images');
-const resultsContainer = document.getElementById('results');
+// const resultsContainer = document.getElementById('results');
 let button = document.getElementById('button');
 const firstImg = document.querySelector('#images1');
 const secondImg = document.querySelector('#images2');
 const thirdImg = document.querySelector('#images3');
-const barChart = document.querySelector('#chart');
+// const barChart = document.querySelector('#chart');
 
 
 let state = {
@@ -13,33 +13,14 @@ let state = {
   allImg: [],
 };
 
-function Images(name,image) {
+function Images(name,image,votes=0,views=0) {
   this.name = name;
   this.imageFile = image;
-  this.votes = 0;
-  this.views = 0;
+  this.votes = votes;
+  this.views = views;
   state.allImg.push(this);
 }
 
-new Images('bag','img/bag.jpg');
-new Images('banana','img/banana.jpg');
-new Images('bathroom','img/bathroom.jpg');
-new Images('boots','img/boots.jpg');
-new Images('breakfast','img/breakfast.jpg');
-new Images('bubblegum','img/bubblegum.jpg');
-new Images('chair','img/chair.jpg');
-new Images('cthulhu','img/cthulhu.jpg');
-new Images('dog-duck','img/dog-duck.jpg');
-new Images('dragon','img/dragon.jpg');
-new Images('pen','img/pet-sweep.jpg');
-new Images('pet-sweep','img/pet-sweep.jpg');
-new Images('scissors','img/scissors.jpg');
-new Images('shark','img/shark.jpg');
-new Images('sweep','img/sweep.png');
-new Images('tauntaun','img/tauntaun.jpg');
-new Images('unicorn','img/unicorn.jpg');
-new Images('water-can','img/water-can.jpg');
-new Images('wine-glass','img/wine-glass.jpg');
 
 
 function handleClick(event){
@@ -53,13 +34,14 @@ function handleClick(event){
 
   if(state.numClicksSoFar === state.numClicksAllowed){
     removeListener();
-    renderResultsButton();
+    // renderResultsButton();
     // button.addEventListener('click',renderResults); this is also correct
     button.addEventListener('click',() =>renderResults());
     // button.addEventListener('click',renderResults()); THIS IS WRONG, CALLS THE FUNCTION RIGHT AWAY
   } else {
     renderImgs();
   }
+  saveImgData();
 }
 
 function renderImgs() {
@@ -93,24 +75,25 @@ function renderImgs() {
 
 }
 
-function renderResultsButton(){
-  button.style.display = 'block';
+// function renderResultsButton(){
+//   button.style.display = 'block';
 
-}
+// }
 
 function removeListener() {
   imagesContainer.removeEventListener('click',handleClick);
 }
 
 function renderResults(){
-  for (let i = 0; i < state.allImg.length; i++) {
-    let finalVotes = state.allImg[i].votes;
-    let finalViews = state.allImg[i].views;
-    let name =state.allImg[i].name;
-    let list = document.createElement('li');
-    list.textContent = `${name} Total Votes: ${finalVotes} Total Views: ${finalViews}`;
-    resultsContainer.append(list);
-  }
+  // couldn't figure out why this would render each time i pressed the results button.
+  // for (let i = 0; i < state.allImg.length; i++) {
+  //   let finalVotes = state.allImg[i].votes;
+  //   let finalViews = state.allImg[i].views;
+  //   let name = state.allImg[i].name;
+  //   let list = document.createElement('li');
+  //   list.textContent = `${name} Total Votes: ${finalVotes} Total Views: ${finalViews}`;
+  //   resultsContainer.append(list);
+  // }
 
   let imgName = [];
   let imgVotes = [];
@@ -152,22 +135,61 @@ function renderResults(){
     }
   };
   const myChart = new Chart('barchart',config);
+  button.removeEventListener('click',renderResults);
 }
 
 function setupListener() {
   imagesContainer.addEventListener('click',handleClick);
 }
 
-function init() {
-  let initString = localStorage.getItem('state') || '';
-  state = JSON.parse(initString);
-  
+function saveImgData() {
+  let dataStorage = {
+    allImg: state.allImg,
+  };
+  localStorage.setItem('imagesData', JSON.stringify(dataStorage));
 }
 
+function loadData() {
+  let storedData = localStorage.getItem('imagesData');
+  if(storedData){
+    let parsedData = JSON.parse(storedData);
+
+    for(let i = 0; i < parsedData.allImg.length; i++){
+      let p = parsedData.allImg[i];
+      new Images(p.name, p.imageFile, p.votes, p.views);
+    }
+  } else{
+    new Images('bag','img/bag.jpg');
+    new Images('banana','img/banana.jpg');
+    new Images('bathroom','img/bathroom.jpg');
+    new Images('boots','img/boots.jpg');
+    new Images('breakfast','img/breakfast.jpg');
+    new Images('bubblegum','img/bubblegum.jpg');
+    new Images('chair','img/chair.jpg');
+    new Images('cthulhu','img/cthulhu.jpg');
+    new Images('dog-duck','img/dog-duck.jpg');
+    new Images('dragon','img/dragon.jpg');
+    new Images('pen','img/pet-sweep.jpg');
+    new Images('pet-sweep','img/pet-sweep.jpg');
+    new Images('scissors','img/scissors.jpg');
+    new Images('shark','img/shark.jpg');
+    new Images('sweep','img/sweep.png');
+    new Images('tauntaun','img/tauntaun.jpg');
+    new Images('unicorn','img/unicorn.jpg');
+    new Images('water-can','img/water-can.jpg');
+    new Images('wine-glass','img/wine-glass.jpg');
+  }
+}
+
+function initializeApp (){
+  loadData();
+  setupListener();
+  renderImgs();
+}
+
+initializeApp ();
 
 
-setupListener();
-renderImgs();
 // removeButton();
 
 
