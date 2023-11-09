@@ -158,9 +158,11 @@ function setupListener() {
   imagesContainer.addEventListener('click',handleClick);
 }
 
-// function buttonListener() {
-
-// }
+function init() {
+  let initString = localStorage.getItem('state') || '';
+  state = JSON.parse(initString);
+  
+}
 
 
 
