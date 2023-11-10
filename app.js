@@ -9,7 +9,7 @@ const thirdImg = document.querySelector('#images3');
 
 let state = {
   numClicksSoFar: 0,
-  numClicksAllowed: 5,
+  numClicksAllowed: 25,
   allImg: [],
 };
 
