@@ -1,11 +1,8 @@
 const imagesContainer = document.getElementById('images');
-// const resultsContainer = document.getElementById('results');
 let button = document.getElementById('button');
 const firstImg = document.querySelector('#images1');
 const secondImg = document.querySelector('#images2');
 const thirdImg = document.querySelector('#images3');
-// const barChart = document.querySelector('#chart');
-
 
 let state = {
   numClicksSoFar: 0,
@@ -34,7 +31,6 @@ function handleClick(event){
 
   if(state.numClicksSoFar === state.numClicksAllowed){
     removeListener();
-    // renderResultsButton();
     // button.addEventListener('click',renderResults); this is also correct
     button.addEventListener('click',() =>renderResults());
     // button.addEventListener('click',renderResults()); THIS IS WRONG, CALLS THE FUNCTION RIGHT AWAY
@@ -59,8 +55,6 @@ function renderImgs() {
     img3 = pickRandomImg();
   }
 
-  console.log(state.allImg[img1]);
-
   firstImg.src = state.allImg[img1].imageFile;
   firstImg.alt = state.allImg[img1].name;
   state.allImg[img1].views++;
@@ -72,13 +66,7 @@ function renderImgs() {
   thirdImg.src = state.allImg[img3].imageFile;
   thirdImg.alt = state.allImg[img3].name;
   state.allImg[img3].views++;
-
 }
-
-// function renderResultsButton(){
-//   button.style.display = 'block';
-
-// }
 
 function removeListener() {
   imagesContainer.removeEventListener('click',handleClick);
@@ -135,7 +123,6 @@ function renderResults(){
     }
   };
   const myChart = new Chart('barchart',config);
-  button.removeEventListener('click',renderResults);
 }
 
 function setupListener() {
@@ -189,7 +176,5 @@ function initializeApp (){
 
 initializeApp ();
 
-
-// removeButton();
 
 
